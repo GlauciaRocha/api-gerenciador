@@ -1,0 +1,36 @@
+{
+  "name": "api-autenticada-com-testes",
+  "version": "1.0.0",
+  "description": "API REST com autenticação JWT e testes automatizados usando Mocha, Chai e Supertest.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "mocha 'tests/**/*.test.js' --timeout 5000 --exit"
+  },
+  "keywords": [
+    "api",
+    "rest",
+    "nodejs",
+    "express",
+    "jwt",
+    "mocha",
+    "chai"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "chai": "^4.5.0",
+    "mocha": "^10.8.2",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4"
+  },
+  "directories": {
+    "test": "tests"
+  }
+}

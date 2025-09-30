@@ -1,0 +1,37 @@
+name: Pipeline de Testes da API
+
+# Gatilhos: A pipeline vai rodar em todo push ou pull request para a branch 'main'
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # Nome do job
+  test-api:
+    # Máquina virtual onde o job vai rodar
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Faz o checkout do seu código do repositório para a máquina virtual
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # 2. Configura o ambiente Node.js na versão desejada
+      - name: Configurar Node.js v18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # 3. Instala as dependências do projeto
+      - name: Instalar dependências
+        run: npm install
+
+      # 4. Roda o comando de teste
+      - name: Executar testes
+        run: npm test
+        env:
+          # Define as variáveis de ambiente necessárias para os testes na pipeline
+          JWT_SECRET: ${{ secrets.JWT_SECRET_CI || 'fallback-secret-for-ci' }}
+          PORT: 3001
