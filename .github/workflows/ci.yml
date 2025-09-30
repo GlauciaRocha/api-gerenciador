@@ -3,9 +3,9 @@ name: Pipeline de Testes da API
 # Gatilhos: A pipeline vai rodar em todo push ou pull request para a branch 'main'
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   # Nome do job
