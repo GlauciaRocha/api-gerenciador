@@ -4,9 +4,11 @@
   "description": "API REST com autenticação JWT e testes automatizados usando Mocha, Chai e Supertest.",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "test": "mocha 'tests/**/*.test.js' --timeout 5000 --exit"
+    "start": "node -r dotenv/config src/server.js",
+    "dev": "nodemon -r dotenv/config src/server.js",
+    "test": "mocha 'tests/**/*.test.js' --timeout 5000 --exit",
+    "k6": "k6 run -e BASE_URL=http://localhost:3000 tests/k6/checkout.test.js",
+    "k6:report": "k6 run -e BASE_URL=http://localhost:3000 tests/k6/checkout.test.js --out json=tests/k6/results.json && node tests/k6/generateReport.js"
   },
   "keywords": [
     "api",
