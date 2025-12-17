@@ -2,7 +2,47 @@
 const jwt = require('jsonwebtoken');
 
 // Em um projeto real, isso viria de um banco de dados
-const users = [{ id: 1, email: 'julio@teste.com', password: '123' }];
+const users = [{ id: 1, email: 'julio@teste.com', password: '123', name: 'Julio' }];
+let nextUserId = 2;
+
+// Registrar novo usuário
+exports.register = (req, res) => {
+    const { name, email, password } = req.body;
+
+    // Validação de campos obrigatórios
+    if (!name || !email || !password) {
+        return res.status(400).json({ 
+            error: 'Nome, email e senha são obrigatórios.' 
+        });
+    }
+
+    // Verifica se o email já existe
+    const existingUser = users.find(u => u.email === email);
+    if (existingUser) {
+        return res.status(409).json({ 
+            error: 'Email já cadastrado.' 
+        });
+    }
+
+    // Cria o novo usuário
+    const newUser = {
+        id: nextUserId++,
+        name,
+        email,
+        password
+    };
+
+    users.push(newUser);
+
+    res.status(201).json({ 
+        message: 'Usuário registrado com sucesso!',
+        data: {
+            id: newUser.id,
+            name: newUser.name,
+            email: newUser.email
+        }
+    });
+};
 
 exports.login = (req, res) => {
     const { email, password } = req.body;
@@ -19,5 +59,15 @@ exports.login = (req, res) => {
         { expiresIn: '1h' }
     );
 
-    res.json({ message: 'Login bem-sucedido!', token });
+    res.json({ 
+        message: 'Login bem-sucedido!', 
+        data: {
+            token: token,
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email
+            }
+        }
+    });
 };
